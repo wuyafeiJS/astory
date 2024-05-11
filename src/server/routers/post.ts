@@ -3,10 +3,11 @@
  * This is an example router, you can delete this file and then update `../pages/api/trpc/[trpc].tsx`
  */
 import { router, publicProcedure } from '../trpc';
+import { fetchStoriesFromPage } from '../../utils/cheerio';
 import type { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { prisma } from '~/server/prisma';
+import { prisma } from '@/server/prisma';
 
 /**
  * Default selector for Post.
@@ -35,7 +36,6 @@ export const postRouter = router({
        * @link https://trpc.io/docs/v11/useInfiniteQuery
        * @link https://www.prisma.io/docs/concepts/components/prisma-client/pagination
        */
-
       const limit = input.limit ?? 50;
       const { cursor } = input;
 
@@ -102,4 +102,12 @@ export const postRouter = router({
       });
       return post;
     }),
+  addMany: publicProcedure.mutation(async () => {
+    const storys = await fetchStoriesFromPage();
+    const post = await prisma.post.createMany({
+      data: storys,
+      skipDuplicates: true,
+    });
+    return post;
+  }),
 });

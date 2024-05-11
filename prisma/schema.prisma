@@ -12,9 +12,10 @@ generator client {
 
 model Post {
   id    String @id @default(uuid())
-  title String
+  title String @unique
   text  String
-
+  author String
+  description String
   // To return `Date`s intact through the API we use transformers
   // https://trpc.io/docs/v11/data-transformers
   // This is unique so it can be used for cursor-based pagination

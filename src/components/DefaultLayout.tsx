@@ -2,7 +2,7 @@ import Head from 'next/head';
 import type { ReactNode } from 'react';
 import { Inter as FontSans } from 'next/font/google';
 
-import { cn } from '~/utils/shadcn';
+import { cn } from '@/utils/shadcn';
 type DefaultLayoutProps = { children: ReactNode };
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -18,7 +18,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
 
       <main
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased ',
           fontSans.variable,
         )}
       >
